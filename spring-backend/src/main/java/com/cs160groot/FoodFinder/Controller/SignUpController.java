@@ -29,10 +29,10 @@ public class SignUpController {
 	public SignUpController(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
-	
-	@GetMapping("/{_id}")
-	public boolean checkIfEmailAvailable(@PathVariable String _id) {
-		if(userRepository.findById(_id).isEmpty()) {
+
+	@GetMapping("/{email}")
+	public boolean checkIfEmailAvailable(@PathVariable String email) {
+		if(userRepository.findByEmail(email).isEmpty()) {
 			return true;
 		} else {
 			return false;

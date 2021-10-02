@@ -13,23 +13,21 @@ const SignUpForm = () => {
     const onPasswordChange = (event) => {
         setPassword(event.target.value);
     }
+
     const onSignUpSubmit = () => {
-        // axios.get is asynchronous. need to force program to wait for it.
         axios.get("http://localhost:8080/signup/" + email).then(response => {
             console.log(response.data);
             emailAvailable = response.data;
-        });
-        if(emailAvailable) {
-            const appUser = {
-                "email": email, 
-                "password" : password
-            };
-            axios.post("http://localhost:8080/signup/" + email, appUser);
-            console.log("Account created.");
-        } else {
-            console.log("Email is taken.");
-        }
+			if(emailAvailable) {
+				const appUser = { "email" : email, "password" : password };
+				axios.post("http://localhost:8080/signup/" + email, appUser);
+				console.log("Account registration successful.");
+			} else {
+				console.log("Email already used.");
+			}
+		});
     };
+
 
     return(
         <div>
