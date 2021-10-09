@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cs160groot.FoodFinder.Entity.User;
+import com.cs160groot.FoodFinder.Entity.AppUser;
 import com.cs160groot.FoodFinder.Repository.UserRepository;
 
 
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://172.26.139.41:3000/")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -37,22 +37,22 @@ public class UserController {
 	}
 	
 	@GetMapping
-	public Iterable<User> getUsers() {
+	public Iterable<AppUser> getUsers() {
 		return userRepository.findAll();
 	}
 	
 	@GetMapping("/{id}")
-	public Optional<User> getUserById(@PathVariable String id) {
+	public Optional<AppUser> getUserById(@PathVariable String id) {
 		return userRepository.findById(id);
 	}
 	
 	@PostMapping
-	public User postUser(@RequestBody User user) {
+	public AppUser postUser(@RequestBody AppUser user) {
 		return userRepository.save(user);
 	}
 	
-	@PostMapping("/{id")
-	public ResponseEntity<User> postUser(@PathVariable String id, @RequestBody User user) {
+	@PostMapping("/{id}")
+	public ResponseEntity<AppUser> postUser(@PathVariable String id, @RequestBody AppUser user) {
 		return (
 				userRepository.existsById(id)) ?
 						new ResponseEntity<>(userRepository.save(user), HttpStatus.OK) :

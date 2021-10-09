@@ -1,19 +1,20 @@
 package com.cs160groot.FoodFinder.Entity;
 
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "user")
-public class User {
+public class AppUser {
 	@Id
 	private String _id;
+	private String email;
 	private String password;
 	
-	public User() {}
+	public AppUser() {}
 	
-	public User(String _id, String password) {
+	public AppUser(String _id, String email, String password) {
 		this._id = _id;
+		this.email = email;
 		this.password = password;
 	}
 	
@@ -21,6 +22,10 @@ public class User {
 	
 	public String getId() {
 		return _id;
+	}
+	
+	public String getEmail() {
+		return email;
 	}
 	
 	public String getPassword() {
@@ -31,6 +36,10 @@ public class User {
 	
 	public void setId(String _id) {
 		this._id = _id;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	public void setPassword(String password) {
