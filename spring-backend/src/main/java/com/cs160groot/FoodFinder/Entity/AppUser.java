@@ -1,14 +1,27 @@
 package com.cs160groot.FoodFinder.Entity;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Document(collection = "user")
 public class AppUser {
 	@Id
 	private String _id;
+	@NotBlank
+	@Email
 	private String email;
+	@NotBlank
 	private String password;
+	
+	@DBRef
+	private Set<Role> roles = new HashSet<>();
 	
 	public AppUser() {}
 	
@@ -32,6 +45,10 @@ public class AppUser {
 		return password;
 	}
 	
+	public Set<Role> getRoles() {
+		return roles;
+	}
+	
 	// setter methods
 	
 	public void setId(String _id) {
@@ -44,5 +61,9 @@ public class AppUser {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 }

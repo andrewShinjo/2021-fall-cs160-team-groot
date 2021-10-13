@@ -31,6 +31,7 @@ const SignUpForm = () => {
 
     return(
         <div>
+			<h1>Sign Up Form</h1>
             <label htmlFor="email">Email:</label>
 				<input 
                     type="text"

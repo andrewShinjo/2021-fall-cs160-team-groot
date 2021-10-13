@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cs160groot.FoodFinder.Entity.AppUser;
 import com.cs160groot.FoodFinder.Repository.UserRepository;
 
-@CrossOrigin(origins = "http://172.26.139.41:3000/")
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/signup")
-public class SignUpController {
+public class AppUserController {
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 		
-	public SignUpController(UserRepository userRepository) {
+	public AppUserController(UserRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 

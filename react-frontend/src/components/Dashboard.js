@@ -1,7 +1,10 @@
 
 const Dashboard = () => {
 	return(
-		<h1>Dashboard</h1>
+		<div>
+			<h1>Dashboard</h1>
+			<p>This page can only be accessed when logged in</p>
+		</div>
 	);
 };	
 
