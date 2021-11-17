@@ -6,8 +6,9 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import com.cs160groot.FoodFinder.Entity.AppUser;
 
-public interface AppUserRepository extends MongoRepository<AppUser, Integer>{
+public interface AppUserRepository extends MongoRepository<AppUser, String>{
 	Optional<AppUser> findByEmail(String email);
+	Optional<AppUser> findById(String userID);
 	Optional<AppUser> findByUsername(String username);
 	
 	@Query("{$and : [ { username: ?0 } , { password: ?1 } ] }")

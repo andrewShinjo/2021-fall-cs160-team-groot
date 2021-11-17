@@ -45,7 +45,10 @@ public class AuthenticationController {
 	public ResponseEntity<?> signup(@RequestBody AppUser appUser) {
 		if (appUserRepository.findByEmail(appUser.getEmail()).isPresent()) {
 			return ResponseEntity.badRequest().body("Error: Email is already used.");
-		} else {
+		} else if(appUserRepository.findByUsername(appUser.getUsername()).isPresent()) {
+			return ResponseEntity.badRequest().body("Error: Username is already used.");
+		}
+		else {
 			appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
 			appUserRepository.save(appUser);
 			return ResponseEntity.ok("User registered successfully.");

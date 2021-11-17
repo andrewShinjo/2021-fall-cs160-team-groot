@@ -3,6 +3,7 @@ package com.cs160groot.FoodFinder.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -39,7 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.csrf().disable()
 			.exceptionHandling().and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
+			.authorizeRequests()
+			.antMatchers(HttpMethod.GET, "/api/recipe/**").permitAll()
+			.antMatchers(HttpMethod.GET, "/api/users/**").permitAll()
+			.antMatchers("/api/auth/**").permitAll()
 			.anyRequest().authenticated();
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}

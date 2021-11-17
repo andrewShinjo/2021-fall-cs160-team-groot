@@ -1,7 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
+
 html{
     height: 100%;
-    background-image: url("https://cdn.dribbble.com/users/6407551/screenshots/14739480/media/ad2c082fe7c323212f51ff9e48bd00b7.png?compress=1&resize=1600x1200");
     background-repeat: no-repeat;
+    background-image: url("https://cdn.dribbble.com/users/6407551/screenshots/14739480/media/ad2c082fe7c323212f51ff9e48bd00b7.png?compress=1&resize=1600x1200");
     background-size:cover;
 }
 
@@ -19,13 +21,11 @@ html{
     margin-right:auto;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
 .ff-font {
   font-family: 'Gabriela', Arial, Helvetica, sans-serif;
   color: #6da778;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
 .notesFieldsFont {
     font-family: 'Gabriela', Arial, Helvetica, sans-serif;
     color: #6da778;
@@ -33,19 +33,22 @@ html{
 }
 
 .regularFont{
-    @import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
     font-family: 'Gabriela', Arial, Helvetica, sans-serif;
 
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
 .titleFont{
     font-family: 'Gabriela', Arial, Helvetica, sans-serif;
     color: #6da778;
     text-align: center;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Gabriela&display=swap');
+.subheaderFont{
+    font-family: 'Gabriela', Arial, Helvetica, sans-serif;
+    color: #6da778;
+    font-size: 15px;
+}
+
 .profileFont{
     font-family: 'Gabriela', Arial, Helvetica, sans-serif;
     text-align: center;
@@ -54,4 +57,9 @@ html{
 .instructionsFont{
     font-family: 'Gabriela', Arial, Helvetica, sans-serif;
     font-size: 1.15em;
+}
+
+.favoriteButton{
+    color:firebrick;
+    width: 100%;
 }

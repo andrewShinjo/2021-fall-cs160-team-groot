@@ -18,7 +18,7 @@ ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Switch>
-          <Route path="/display" component={DisplayPage}/>
+          <Route path="/display/:id" component={DisplayPage}/>
           <Route path="/search" component={SearchResults}/>
           <Route path="/sign-up" component={SignUpPage}/>
           <Route path="/sign-in" component={SignIn}/>

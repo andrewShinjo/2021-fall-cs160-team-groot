@@ -1,12 +1,10 @@
 import axios from 'axios';
 import React,{useState} from 'react';
-import { Form, Card, Button } from 'react-bootstrap'
+import { Form, Card, Button, Row, Col } from 'react-bootstrap'
 import '../css/signIn.css';
 import validationSignIn from "./signInValidation"
 
-const SignIn = () => {
-    
-    // Initial value assignment
+const SignIn = (props) => {
     const [values, setValues] = useState({
         username: "",
         password: ""
@@ -28,8 +26,20 @@ const SignIn = () => {
         setErrors(validationSignIn(values));
 
         axios.post('http://localhost:8080/api/auth/signin', values)
-        .then(res => console.log(res))
+        // If promise is fullfilled (status code 200), redirect to profile page and output data on console
+        .then(res => { 
+            window.localStorage.setItem("jwt", res.data.jwt);
+            window.localStorage.setItem("userID", res.data.userID);
+            props.history.push("/profile");
+            console.log(res)
+        })
+        // If promise is rejected, output error message on console
         .catch(err => console.log(err));
+
+    };
+
+    const returnHome = () => {
+         props.history.push("/");
     };
 
     return (
@@ -61,9 +71,17 @@ const SignIn = () => {
                             />
                             {errors.password && <p className="error">{errors.password}</p>}
                         </Form.Group>
+                        <Row>
+                            <Col>
                         <div className="signIn-button-formatting">
                             <Button className="signIn-button-styling" variant="success" type="submit" onClick={HandleFormSubmit}>Sign In </Button>
+                        </div></Col>
+                        <Col>
+                        <div className="signIn-button-formatting">
+                            <Button className="signIn-button-styling" onClick={returnHome}>Return</Button>
                         </div>
+                        </Col>
+                        </Row>
                     </Form>
                 </Card.Body>
             </Card>

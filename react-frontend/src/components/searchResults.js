@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import '../css/searchResults.css';
 import { Row, Col, Form, Card } from 'react-bootstrap';
+import axios from "axios";
 
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +9,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import dmmydata from '../dummyData';    // Delete this import of the json file later
 import RecipeCard from './recipeCard';
+import UserDataService from "../services/user.service";
+import RecipeService from '../services/recipe.service';
 
 const SearchResults = () => {
     const [filteredData, setFilteredData] = useState([]); // Holds input that user typed into search bar 
@@ -20,6 +23,19 @@ const SearchResults = () => {
     const [restrictGenre, setRestrictGenre] = useState([]);
     const [filteredRestrictGenre, setFilteredRestrictGenre] = useState([]);
     const [filterSearchOption, setFilterSearchOption] = useState("");
+
+    /*
+    Initially, sets the hook to all recipes to display recipe cards without any user input
+    */
+    useEffect(() => {
+        RecipeService.getAllRecipes()
+            .then((response) => {
+                setSearchResults(response.data);
+            }).catch((e) => {
+                console.log(e);
+            }
+            );
+    }, [])
 
     /*
     useEffect() runs everytime application renders 
@@ -59,7 +75,7 @@ const SearchResults = () => {
     filterSearchOption holds the filter option that user wants to search by 
     */
     const onFilteredSearch = e => {
-        setFilterSearchOption({id: e.target.id});
+        setFilterSearchOption({ id: e.target.id });
     }
 
     /*
@@ -90,7 +106,109 @@ const SearchResults = () => {
     /*
     handleClick gets triggered when search bar button is clicked on
     */
-    const handleClick = () => {
+    const handleClick = async () => {
+        if (dietGenre.length != 0 || restrictGenre.length != 0) {
+            var correctWordFormat = "";
+
+            //Changing the format of user input recipe name to match one in database
+            if (filteredData.length != 0 && (filteredData.toString().split(" ").length > 1)) {
+                let changeToLowerCase = filteredData.toString().toLowerCase();
+                const words = changeToLowerCase.split(" ");
+
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                }
+
+                correctWordFormat = words.join(" ");
+            }
+
+            const res = await axios.get('http://localhost:8080/api/recipe/search', { params: { 
+            name: correctWordFormat,
+            menu: dietGenre.toString(),
+            restriction: restrictGenre.toString() } })
+                .then((response) => {
+                    setSearchResults(response.data);
+                    console.log(response.data);
+                }).catch((e) => {
+                    setSearchResults(-1);
+                    console.log(e);
+                }) 
+            console.log(correctWordFormat);
+            console.log(res);
+        }
+        // If the user is searching by ingredients
+        else if (filterSearchOption.id === 'ingredients') {
+            var correctWordFormat;
+            correctWordFormat = filteredData.toString().toLowerCase();
+
+            const res = await axios.get('http://localhost:8080/api/recipe/ingredients', { params: { ingredient: correctWordFormat } })
+                .then((response) => {
+                    setSearchResults(response.data);
+                    console.log(response.data);
+                }).catch((e) => {
+                    setSearchResults(-1);
+                    console.log(e);
+                })
+        } 
+        // If the user is searching by diet
+        else if (filterSearchOption.id === 'diet') {
+            /* Throws an error if the user input string is empty and is converted to lower case
+              So add an if else statement to prevent error*/
+            if (filteredData.length == 0) {
+                setSearchResults(-1);
+            } else {
+                var correctWordFormat;
+                correctWordFormat = filteredData.toString().toLowerCase();
+                correctWordFormat = correctWordFormat[0].toUpperCase() + correctWordFormat.substr(1);
+
+                const res = await axios.get('http://localhost:8080/api/recipe/menu', { params: { menu: correctWordFormat } })
+                    .then((response) => {
+                        setSearchResults(response.data);
+                    }).catch((e) => {
+                        setSearchResults(-1);
+                        console.log(e);
+                    })
+            }
+        } 
+        // If the user is searching by restrictions
+        else if (filterSearchOption.id === 'restriction') {
+            var correctWordFormat;
+            correctWordFormat = filteredData.toString().toLowerCase();
+
+            const res = await axios.get('http://localhost:8080/api/recipe/restrictions', { params: { restriction: correctWordFormat } })
+                .then((response) => {
+                    setSearchResults(response.data);
+                }).catch((e) => {
+                    setSearchResults(-1);
+                    console.log(e);
+                })
+        }
+        /* Search by recipe category is set by default if the user doesn't check radio button, 
+        so leave the 'search by recipe' for the else statement 
+        */ 
+        else {
+            var correctWordFormat;
+
+            if (filteredData.toString().split(" ").length > 1) {
+                let changeToLowerCase = filteredData.toString().toLowerCase();
+                const words = changeToLowerCase.split(" ");
+
+                for (let i = 0; i < words.length; i++) {
+                    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                }
+
+                correctWordFormat = words.join(" ");
+            }
+
+            const res = await axios.get('http://localhost:8080/api/recipe/names', { params: { name: correctWordFormat } })
+                .then((response) => {
+                    setSearchResults(response.data);
+                }).catch((e) => {
+                    setSearchResults(-1);
+                    console.log(e);
+                })
+
+        }
     }
 
     // Grabbing user input from search and setting it to the filteredData hook
@@ -102,10 +220,10 @@ const SearchResults = () => {
     return (
         <div>
             <div className="outer-container">
-                <Row class="justify-content-md-center">
-                    <div class="col-3">
-                        <ul class="list-group">
-                            <li class="list-group-item">
+                <Row className="justify-content-md-center">
+                    <div className="col-3">
+                        <ul className="list-group">
+                            <li className="list-group-item">
                                 <Form.Label className="labelTitles">Ingredients</Form.Label>
                                 {['checkbox'].map((type) => (
                                     <div key={`inline-${type}`} className="mb-3">
@@ -141,7 +259,7 @@ const SearchResults = () => {
                                             label="Pescatarian"
                                             name="diet"
                                             type={type}
-                                            id="pescatarian"
+                                            id="Pescatarian"
                                             onChange={handleDietChange}
                                         />
                                         <Form.Check
@@ -149,7 +267,7 @@ const SearchResults = () => {
                                             label="Vegetarian"
                                             name="diet"
                                             type={type}
-                                            id="vegetarian"
+                                            id="Vegetarian"
                                             onChange={handleDietChange}
                                         />
                                         <Form.Check
@@ -157,7 +275,7 @@ const SearchResults = () => {
                                             label="Vegan"
                                             name="diet"
                                             type={type}
-                                            id="vegan"
+                                            id="Vegan"
                                             onChange={handleDietChange}
                                         />
                                     </div>
@@ -181,7 +299,7 @@ const SearchResults = () => {
                                             label="Peanut-free"
                                             name="restriction"
                                             type={type}
-                                            id="nut-free"
+                                            id="peanut-free"
                                             onChange={handleRestrictChange}
                                         />
                                         <Form.Check
@@ -208,6 +326,14 @@ const SearchResults = () => {
                                             id="shellfish-free"
                                             onChange={handleRestrictChange}
                                         />
+                                        <Form.Check
+                                            inline
+                                            label="Fat-free"
+                                            name="restriction"
+                                            type={type}
+                                            id="fat-free"
+                                            onChange={handleRestrictChange}
+                                        />
                                     </div>
                                 ))}
                             </li>
@@ -231,7 +357,7 @@ const SearchResults = () => {
                                     onClick={handleClick}>
                                     <Link to="/search"><FontAwesomeIcon icon={faSearch} color="white" /></Link>
                                 </button>
-           
+
                                 <div className="py-2">
                                     {['radio'].map((type) => (
                                         <div key={`inline-${type}`} className="mb-3">
@@ -274,13 +400,19 @@ const SearchResults = () => {
 
                             <Row>
                                 {
-                                    (dmmydata.map((val, key) => {
-                                        return (
-                                            <Col xs={3} className="mb-2" key={key}>
-                                                <RecipeCard data={val} />
-                                            </Col>
-                                        );
-                                    }))
+                                    (searchResults === -1) ?
+                                        (<p className="searchTitle text-center">Sorry cannot find recipe, please try again! </p>)
+                                        :
+                                        (searchResults.length === 0) ?
+                                            (<p className="searchTitle text-center">Sorry cannot find recipe, please try again! </p>)
+                                            :
+                                            (searchResults.map((val, key) => {
+                                                return (
+                                                    <Col xs={3} className="mb-2" key={key}>
+                                                        <RecipeCard data={val} />
+                                                    </Col>
+                                                );
+                                            }))
                                 }
                             </Row>
                         </Card>
