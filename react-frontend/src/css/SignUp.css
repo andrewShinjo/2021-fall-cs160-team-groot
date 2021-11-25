@@ -28,3 +28,10 @@
 .error {
     color: red;
 }
+
+.returnButton {
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    width: 84px;
+}

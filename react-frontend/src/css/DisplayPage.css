@@ -63,3 +63,13 @@ html{
     color:firebrick;
     width: 100%;
 }
+
+.returnToSearch-button{
+    color: #fff;
+    background-color: #198754;
+    border-color: #198754;
+    width: 100%;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    margin-top: 10%;
+}

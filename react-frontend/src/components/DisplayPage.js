@@ -7,7 +7,7 @@ import '../css/DisplayPage.css';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
-const DisplayPage = () => {
+const DisplayPage = (props) => {
     //Grabbing ID from URL
     const { id } = useParams();
     console.log(id);
@@ -26,6 +26,9 @@ const DisplayPage = () => {
             })
     }, [])
 
+    const returnToSearch = () => {
+        props.history.push("/search");
+    };
     return (
         <div className="background">
             <Card className="displayCard" style={{ width: '80%' }}>
@@ -127,6 +130,9 @@ const DisplayPage = () => {
                                     <Link to></Link>
                                      Favorite</text>
                                 </Button>
+                                <div className="text-center">
+                                    <Button className="returnToSearch-button" onClick={returnToSearch}>Return</Button>
+                                </div>
                             </Col>
                             <Col>
                                 <Card>

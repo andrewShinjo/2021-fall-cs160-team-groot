@@ -33,8 +33,11 @@ const SignIn = (props) => {
             props.history.push("/profile");
             console.log(res)
         })
-        // If promise is rejected, output error message on console
-        .catch(err => console.log(err));
+        // If promise is rejected, output error message on console and have an alert pop-up
+        .catch(err => {
+            console.log(err)
+            alert("Incorrect username or password!");
+        });
 
     };
 

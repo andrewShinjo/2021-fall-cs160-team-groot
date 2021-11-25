@@ -39,6 +39,9 @@ const ProfilePage = (props) => {
         setUsername(user.data.username)
     })
 
+    const search = () => {
+        props.history.push("/search");
+   };
     return (
         <div className="container">
             <div className="row mt-3">
@@ -49,6 +52,7 @@ const ProfilePage = (props) => {
                     {/* Change username/password, Change profile pic, Change Visiblity, Delete Account */}
                     <button className="buttonAccount">Food Preferences</button>
                     {/* Change diet and restrictions that automatically apply */}
+                    <button className="buttonAccount mt-2" onClick={search}>Search</button>
                 </div>
                 <div className="col-lg-9 card">
                     <h3 className="ff-font pt-3">Your recipes</h3>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import '../css/searchResults.css';
-import { Row, Col, Form, Card } from 'react-bootstrap';
+import { Row, Col, Form, Card, Button } from 'react-bootstrap';
 import axios from "axios";
 
 import { Link } from "react-router-dom";
@@ -12,7 +12,7 @@ import RecipeCard from './recipeCard';
 import UserDataService from "../services/user.service";
 import RecipeService from '../services/recipe.service';
 
-const SearchResults = () => {
+const SearchResults = (props) => {
     const [filteredData, setFilteredData] = useState([]); // Holds input that user typed into search bar 
     const [wordEntered, setWordEntered] = useState(""); // Hook that determines if search bar is empty or not 
     // Holds which diet values have been clicked (e.g. pescatarian, vegetarian, vegan)
@@ -122,17 +122,20 @@ const SearchResults = () => {
                 correctWordFormat = words.join(" ");
             }
 
-            const res = await axios.get('http://localhost:8080/api/recipe/search', { params: { 
-            name: correctWordFormat,
-            menu: dietGenre.toString(),
-            restriction: restrictGenre.toString() } })
+            const res = await axios.get('http://localhost:8080/api/recipe/search', {
+                params: {
+                    name: correctWordFormat,
+                    menu: dietGenre.toString(),
+                    restriction: restrictGenre.toString()
+                }
+            })
                 .then((response) => {
                     setSearchResults(response.data);
                     console.log(response.data);
                 }).catch((e) => {
                     setSearchResults(-1);
                     console.log(e);
-                }) 
+                })
             console.log(correctWordFormat);
             console.log(res);
         }
@@ -149,7 +152,7 @@ const SearchResults = () => {
                     setSearchResults(-1);
                     console.log(e);
                 })
-        } 
+        }
         // If the user is searching by diet
         else if (filterSearchOption.id === 'diet') {
             /* Throws an error if the user input string is empty and is converted to lower case
@@ -169,7 +172,7 @@ const SearchResults = () => {
                         console.log(e);
                     })
             }
-        } 
+        }
         // If the user is searching by restrictions
         else if (filterSearchOption.id === 'restriction') {
             var correctWordFormat;
@@ -185,7 +188,7 @@ const SearchResults = () => {
         }
         /* Search by recipe category is set by default if the user doesn't check radio button, 
         so leave the 'search by recipe' for the else statement 
-        */ 
+        */
         else {
             var correctWordFormat;
 
@@ -217,11 +220,17 @@ const SearchResults = () => {
         setWordEntered(val.target.value);
     }
 
+    const returnHome = () => {
+        props.history.push("/");
+    };
     return (
         <div>
             <div className="outer-container">
                 <Row className="justify-content-md-center">
                     <div className="col-3">
+                        <div className="text-center">
+                            <Button className="returnButton-SearchPage" onClick={returnHome}>Return Home</Button>
+                        </div>
                         <ul className="list-group">
                             <li className="list-group-item">
                                 <Form.Label className="labelTitles">Ingredients</Form.Label>
