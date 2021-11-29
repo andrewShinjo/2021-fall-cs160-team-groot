@@ -7,12 +7,25 @@ import '../css/DisplayPage.css';
 import { Link } from 'react-router-dom';
 import axios from "axios";
 
+import RecipeDataService from "../services/recipe.service";
+
 const DisplayPage = (props) => {
     //Grabbing ID from URL
     const { id } = useParams();
     console.log(id);
 
     const [recipe, setRecipe] = useState([]);
+
+    const onFavoriteHandler = () => {
+        const username = localStorage.getItem("username");
+        const recipeID = recipe.recipeID;
+        console.log(username);
+        console.log(recipeID);
+        RecipeDataService.favoriteRecipe(username, recipeID)
+            .then(() => {
+                alert("Recipe favorited.");
+            })
+    };
 
     /* When rendered, grab recipe ID from URL to search for recipe in database
     through GET request */
@@ -29,6 +42,7 @@ const DisplayPage = (props) => {
     const returnToSearch = () => {
         props.history.push("/search");
     };
+
     return (
         <div className="background">
             <Card className="displayCard" style={{ width: '80%' }}>
@@ -43,7 +57,7 @@ const DisplayPage = (props) => {
                         <text className="profileFont">
                             Author: &ensp;
                         <FontAwesomeIcon icon={faUserCircle} />
-                        &ensp;Jane Doe </text>
+                        &ensp;{recipe.authorName}</text>
                     </Card.Title>
                     <hr style={{ height: '1px' }}></hr>
 
@@ -123,12 +137,13 @@ const DisplayPage = (props) => {
                                     </Card.Text>
                                 </Card>
                                 <br></br>
-                                <Button variant="outline-dark" className="favoriteButton">
+                                <Button variant="outline-dark" className="favoriteButton" onClick={onFavoriteHandler}>
                                     <text className="regularFont text-center"> &nbsp;
-                                    <FontAwesomeIcon icon={faHeart} />
-                                    &nbsp;
-                                    <Link to></Link>
-                                     Favorite</text>
+                                        <FontAwesomeIcon icon={faHeart} />
+                                        &nbsp;
+                                        <Link to></Link>
+                                        Favorite
+                                    </text>
                                 </Button>
                                 <div className="text-center">
                                     <Button className="returnToSearch-button" onClick={returnToSearch}>Return</Button>

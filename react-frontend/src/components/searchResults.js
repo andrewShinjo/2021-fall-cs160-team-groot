@@ -192,24 +192,28 @@ const SearchResults = (props) => {
         else {
             var correctWordFormat;
 
-            if (filteredData.toString().split(" ").length > 1) {
-                let changeToLowerCase = filteredData.toString().toLowerCase();
-                const words = changeToLowerCase.split(" ");
+            if (filteredData.length === 0 || filteredData.toString().trim().length == 0) {
+                setSearchResults(-1);
+            } else {
+                if (filteredData.toString().split(" ").length > 1) {
+                    let changeToLowerCase = filteredData.toString().toLowerCase();
+                    const words = changeToLowerCase.split(" ");
 
-                for (let i = 0; i < words.length; i++) {
-                    words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                    for (let i = 0; i < words.length; i++) {
+                        words[i] = words[i][0].toUpperCase() + words[i].substr(1);
+                    }
+
+                    correctWordFormat = words.join(" ");
                 }
 
-                correctWordFormat = words.join(" ");
+                const res = await axios.get('http://localhost:8080/api/recipe/names', { params: { name: correctWordFormat } })
+                    .then((response) => {
+                        setSearchResults(response.data);
+                    }).catch((e) => {
+                        setSearchResults(-1);
+                        console.log(e);
+                    })
             }
-
-            const res = await axios.get('http://localhost:8080/api/recipe/names', { params: { name: correctWordFormat } })
-                .then((response) => {
-                    setSearchResults(response.data);
-                }).catch((e) => {
-                    setSearchResults(-1);
-                    console.log(e);
-                })
 
         }
     }

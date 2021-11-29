@@ -19,6 +19,13 @@ export default class HomeMasthead extends Component {
         this.props.history.push("/search")
     }
 
+    signOutHandler = () => {
+        localStorage.removeItem("jwt");
+        localStorage.removeItem("username");
+        this.props.history.push("/");
+        alert("User successfully signed out.");
+    }
+
     render(){
         // Before render
         return(
@@ -33,8 +40,18 @@ export default class HomeMasthead extends Component {
                                 <button className="buttonSearch col-1 py-1" onClick={this.redirectSearch}><FontAwesomeIcon icon={faSearch}/></button>
                             </div>                            
                             <div className="row d-flex justify-content-center">
-                                <button className="buttonHome col-4 mx-2" onClick={this.redirectSignin}>Sign-In</button>
-                                <button className="buttonHome col-4 mx-2" onClick={this.redirectSignup}>Sign-Up</button>
+                                {
+                                    (localStorage.getItem("jwt") === null) ?
+                                    <button className="buttonHome col-4 mx-2" onClick={this.redirectSignin}>Sign-In</button> :
+                                    <button className="buttonHome col-4 mx-2" onClick={this.signOutHandler}>Sign-Out</button>
+                                }
+                                {
+                                    (localStorage.getItem("jwt") === null) ?
+                                    <button className="buttonHome col-4 mx-2" onClick={this.redirectSignup}>Sign-Up</button> :
+                                    null
+                                }
+
+                                
                             </div>
                         </div>
                     </div>

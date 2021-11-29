@@ -12,16 +12,16 @@ class UserDataService {
         return http.get(`/users/${id}`);
     }
 
-    getPreferences(id){
-        return http.get(`/users/preferences/${id}`);
+    getPreferences(username){
+        return http.get(`/users/preferences/${username}`);
     }
 
-    getFavorites(id){
-        return http.get(`/users/favorites/${id}`);
+    getFavorites(username){
+        return http.get(`/users/favorites/${username}`);
     }
 
-    getUploads(id){
-        return http.get(`/users/uploads/${id}`);
+    getUploads(username){
+        return http.get(`/users/uploads/${username}`);
     }
 
     /**

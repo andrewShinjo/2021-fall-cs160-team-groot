@@ -19,14 +19,18 @@
 
 .form-style-Create{
     padding: 3%;
-}*/
+}
+
+.AuthorDateDiv{
+    padding-bottom: 5px;
+}
 
 .Author-Date{
-    padding-bottom: 15px;
+    font-size: 17px;
 }
 
 .outer-div-one-btn{
-    height: 97px;
+    height: 120px;
 }
 
 .outer-div-two-btn{

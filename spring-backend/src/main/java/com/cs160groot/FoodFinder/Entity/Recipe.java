@@ -12,7 +12,7 @@ public class Recipe {
 	@Id
 	private int recipeID;
 	private String name;
-	private int authorID;
+	private String authorName;
 	private List<String> ingredients;
 	private List<String> directions;
 	private List<String> menu;
@@ -22,10 +22,10 @@ public class Recipe {
 	
 	public Recipe() {}
 	
-	public Recipe(int recipeID, String name, int authorID, List<String> ingredients, List<String> directions, List<String> menu, List<String> restrictions, int calorieCount, int prepTime) {
+	public Recipe(int recipeID, String name, String authorName, List<String> ingredients, List<String> directions, List<String> menu, List<String> restrictions, int calorieCount, int prepTime) {
 		this.recipeID = recipeID;
 		this.name = name;
-		this.authorID = authorID;
+		this.authorName = authorName;
 		this.ingredients = ingredients;
 		this.directions = directions;
 		this.menu = menu;
@@ -44,8 +44,8 @@ public class Recipe {
 		return name;
 	}
 	
-	public int getAuthorID() {
-		return authorID;
+	public String getAuthorName() {
+		return authorName;
 	}
 	
 	public List<String> getIngredients() {
@@ -84,8 +84,8 @@ public class Recipe {
 		this.name = name;
 	}
 	
-	public void setAuthorID(int authorID) {
-		this.authorID = authorID;
+	public void setAuthorName(String authorName) {
+		this.authorName = authorName;
 	}
 	
 	public void setIngredients(List<String> ingredients) {

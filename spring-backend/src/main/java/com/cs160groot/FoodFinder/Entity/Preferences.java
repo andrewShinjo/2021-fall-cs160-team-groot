@@ -1,11 +1,12 @@
 package com.cs160groot.FoodFinder.Entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Preferences {
-	private ArrayList<String> ingredients;
-	private ArrayList<String> diet;
-	private ArrayList<String> restrictions;
+	private List<String> ingredients;
+	private List<String> diet;
+	private List<String> restrictions;
 
 	public Preferences() {
 		ingredients = new ArrayList<>();
@@ -13,39 +14,39 @@ public class Preferences {
 		restrictions = new ArrayList<>();
 	}
 	
-	public Preferences(ArrayList<String> ingredients, ArrayList<String> diet, ArrayList<String> restrictions) {
-		this.ingredients = ingredients;
+	public Preferences(List<String> list, List<String> diet, List<String> list2) {
+		this.ingredients = list;
 		this.diet = diet;
-		this.restrictions = restrictions;
+		this.restrictions = list2;
 	}
 	
-	public Preferences(ArrayList<String> diet) {
+	public Preferences(List<String> diet) {
 		this.ingredients = new ArrayList<>();
 		this.diet = diet;
 		this.restrictions = new ArrayList<>();
 	}
 	
-	public ArrayList<String> getIngredients() {
+	public List<String> getIngredients() {
 		return ingredients;
 	}
 	
-	public void setIngredients(ArrayList<String> ingredients) {
+	public void setIngredients(List<String> ingredients) {
 		this.ingredients = ingredients;
 	}
 	
-	public ArrayList<String> getDiet() {
+	public List<String> getDiet() {
 		return diet;
 	}
 	
-	public void setDiet(ArrayList<String> diet) {
+	public void setDiet(List<String> diet) {
 		this.diet = diet;
 	}
 	
-	public ArrayList<String> getRestrictions() {
+	public List<String> getRestrictions() {
 		return restrictions;
 	}
 	
-	public void setRestrictions(ArrayList<String> restrictions) {
+	public void setRestrictions(List<String> restrictions) {
 		this.restrictions = restrictions;
 	}
 

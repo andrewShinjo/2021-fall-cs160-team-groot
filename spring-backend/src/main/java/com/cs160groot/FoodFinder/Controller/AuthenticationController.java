@@ -1,4 +1,7 @@
 package com.cs160groot.FoodFinder.Controller;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.cs160groot.FoodFinder.Entity.AppUser;
+import com.cs160groot.FoodFinder.Entity.Preferences;
 import com.cs160groot.FoodFinder.Repository.AppUserRepository;
 import com.cs160groot.FoodFinder.Security.AuthenticationRequest;
 import com.cs160groot.FoodFinder.Security.AuthenticationResponse;
@@ -50,6 +54,9 @@ public class AuthenticationController {
 		}
 		else {
 			appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
+			appUser.setUploaded(new ArrayList<Integer>());
+			appUser.setFavorited(new ArrayList<Integer>());
+			appUser.setPreferences(new Preferences());
 			appUserRepository.save(appUser);
 			return ResponseEntity.ok("User registered successfully.");
 		}
@@ -64,12 +71,6 @@ public class AuthenticationController {
 		}
 		final UserDetailsImpl userDetails = (UserDetailsImpl) userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 		final String jwt = jwtUtil.generateToken(userDetails);
-		return ResponseEntity.ok(new AuthenticationResponse(jwt, userDetails.getUserID()));
+		return ResponseEntity.ok(new AuthenticationResponse(jwt, jwtUtil.extractUsername(jwt)));
 	}	
-	
-	@GetMapping
-	public String test() {
-		return "Hello";
-	}
-	
 }

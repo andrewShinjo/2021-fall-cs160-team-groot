@@ -13,21 +13,15 @@ import com.cs160groot.FoodFinder.Entity.AppUser;
 
 @Service
 public class UserDetailsImpl implements UserDetails {
-	private String userID;
 	private String username;
 	private String password;
 
 	public UserDetailsImpl(AppUser appUser) {
-		this.userID = appUser.getUserID();
 		this.username = appUser.getUsername();
 		this.password = appUser.getPassword();
 	}
 	
 	public UserDetailsImpl() {}
-	
-	public String getUserID() {
-		return userID;
-	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
