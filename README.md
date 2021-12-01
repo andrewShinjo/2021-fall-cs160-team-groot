@@ -1,6 +1,29 @@
 # 2021-fall-cs160-team-groot
 CS-160 Project
 
+## Setting up the developer environment
+
+To run the program, you need the latest version of Java, Maven, MongoDB, and NodeJS.
+
+For Windows, 
+- Java can be installed here: https://java.com/en/download/windows_manual.jsp
+- Maven can be installed here: https://maven.apache.org/download.cgi?Preferred=ftp%3A%2F%2Fmirror.reverse.net%2Fpub%2Fapache%2F
+- MongoDB can be installed here: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+- NodeJS can be installed here: https://nodejs.org/en/download/
+
+Next, download the source code
+
+```
+git clone https://github.com/julissatinajero/2021-fall-cs160-team-groot.git
+```
+
+The folder structure should look like this in your shell:
+![image](https://user-images.githubusercontent.com/22268862/144146045-e8b9998d-5a18-4777-91ba-2381093b02af.png)
+
+To start the frontend, cd into the react-frontend folder. Then, run "npm install" to download the necessary npm dependencies. Then, run "npm start" to launch the frontend on localhost:3000.
+
+To start the backend, first you will need to launch MongoDB on your computer. Then, open a new shell and cd into the spring-backend folder. In the spring-backend folder, run the command "mvn:spring-boot run" which will install the necessary dependencies in your pom.xml file then runs the Java code.
+
 Front-end Testing Description 
 -----------------------------
 Path to automated tests: 2021-fall-cs160-team-groot/react-frontend/src/testing/cypress/integration
