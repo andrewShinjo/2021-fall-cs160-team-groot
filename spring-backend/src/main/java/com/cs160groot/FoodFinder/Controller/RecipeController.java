@@ -42,7 +42,7 @@ public class RecipeController {
 		this.appUserRepository = appUserRepository;
 		this.mongoTemplate = mongoTemplate;
 		
-		
+		/*
 		List<String> ingredients1 = Arrays.asList("tomato","cucumber","lettuce","carrot","salad dressing", "salt","pepper");
 		List<String> menu1 = Arrays.asList("Vegetarian","Vegan");
 		List<String> restrictions1 = Arrays.asList("gluten-free","peanut-free");
@@ -111,7 +111,7 @@ public class RecipeController {
 		recipeRepository.save(r6);
 		recipeRepository.save(r7);
 		recipeRepository.save(r8);
-		
+		*/
 		
 	}
 	
